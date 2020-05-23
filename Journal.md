@@ -15,3 +15,11 @@ estimate:1hr
 11AM: create new models and reform databases
 estimate:4hr
 stopped @ 19:20
+===
+May 23rd 2020 -start @10:00 AM
+complete models
+estimate:1hr
+2:30pm build admin page & create index page & views for each models
+estimate:2hr
+4:20pm test 404page and http reponse % data transfer
+Stopped @ 5:30pm
