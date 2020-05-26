@@ -23,3 +23,8 @@ estimate:1hr
 estimate:2hr
 4:20pm test 404page and http reponse % data transfer
 Stopped @ 5:30pm
+===
+May 26th 2020 -start @10：00 AM
+find suitable theme for entire webpages
+create editable link
+estimate:2hr
