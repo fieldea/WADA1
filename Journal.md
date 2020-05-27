@@ -28,3 +28,8 @@ May 26th 2020 -start @10：00 AM
 find suitable theme for entire webpages
 create editable link
 estimate:2hr
+stopped @ 8:00 pm
+===
+May 267h 2020 -start @10：00 AM
+use Echarts to create visulize diagram
+estimate:5hr
