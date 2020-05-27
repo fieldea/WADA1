@@ -25,12 +25,13 @@ SECRET_KEY = 'e6=7mp8c29s+p*2-ou$v*a+l)pgv+7x#o4^$2!v+i&ierr)5#9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['frozen-tundra-92450.herokuapp.com']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'climate.apps.ClimateConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,8 +78,12 @@ WSGI_APPLICATION = 'WebAppDevAssignment1.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Climate2',
+        'USER': 'postgres',
+        'PASSWORD': '112234',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -120,3 +125,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    (os.path.join(BASE_DIR, 'static'))
+]

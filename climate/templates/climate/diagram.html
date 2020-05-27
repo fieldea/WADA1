@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Home</title>
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="/static/assets/css/style-starter.css">
+
+  <!-- google fonts -->
+  <link href="http://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+</head>
+
+<body class="sidebar-menu-collapsed">
+
+<section>
+  <!-- sidebar menu start -->
+  <div class="sidebar-menu sticky-sidebar-menu">
+
+
+    <div class="sidebar-menu-inner">
+
+      <!-- sidebar nav start -->
+      <ul class="nav nav-pills nav-stacked custom-nav">
+        <li class="active"><a href="index.html">Dashboard</a>
+        </li>
+            <li><a href="{% url 'member' %}">Member List</a> </li>
+            <li><a href="{% url 'tags' %}">Tags</a> </li>
+            <li><a href="{% url 'data_source' %}">Data Source</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- //sidebar menu end -->
+  <!-- header-starts -->
+  <div class="header sticky-header">
+
+    <!-- notification menu start -->
+    <div class="menu-right">
+      <div class="navbar user-panel-top">
+        <div class="search-box">
+          <form action="#search-results.html" method="get">
+            <input class="search-input" placeholder="Search Here..." type="search" id="search">
+            <button class="search-submit" value=""><span class="fa fa-search"></span></button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--notification menu end -->
+  </div>
+  <!-- //header-ends -->
+  <!-- main content start -->
+<div class="main-content">
+
+  <!-- content -->
+  <div class="container-fluid content-top-gap">
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb my-breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Member List</li>
+      </ol>
+    </nav>
+      {% if diagram_list %}
+    <ul>
+        {% for ds in diagram_list %}
+        <div class="welcome-msg pt-3 pb-4">
+            <div class="chat_list">
+                <div class="chat_people">
+                  <div class="chat_ib">
+                        <h5>ID: {{ ds.id}}</a></h5>
+                        <p>Type: {{ ds.Type }}</p>
+                        <p>DataSourceID: {{ ds.DataSourceID }}</p>
+                        <p>MemberID: {{ ds.MemberID }}</p>
+                        <p>Title: {{ ds.Title }}</p>
+                        <p>Description: {{ ds.Description }}</p>
+                        <p>UploadDate: {{ ds.UploadDate }}</p>
+                        <p>Visit: {{ Visit.Title }}</p>
+                  </div>
+                 </div>
+            </div>
+        </div>
+        {% endfor %}
+    </ul>
+      {% else %}
+    <p>No members.</p>
+      {% endif %}
+
+
+  </div>
+  <!-- //content -->
+</div>
+<!-- main content end-->
+</section>
+  <!--footer section start-->
+<footer class="dashboard">
+  <p>Copyright &copy; 2020.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/"></a></p>
+</footer>
+<!--footer section end-->
+<!-- move top -->
+<button onclick="topFunction()" id="movetop" class="bg-primary" title="Go to top">
+  <span class="fa fa-angle-up"></span>
+</button>
+
+
+
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+<script src="assets/js/jquery-1.10.2.min.js"></script>
+
+<!-- chart js -->
+<script src="assets/js/Chart.min.js"></script>
+<script src="assets/js/utils.js"></script>
+<!-- //chart js -->
+
+<!-- Different scripts of charts.  Ex.Barchart, Linechart -->
+<script src="assets/js/bar.js"></script>
+<script src="assets/js/linechart.js"></script>
+<!-- //Different scripts of charts.  Ex.Barchart, Linechart -->
+
+
+<script src="assets/js/jquery.nicescroll.js"></script>
+<script src="assets/js/scripts.js"></script>
+
+
+
+
+
+
+</body>
+
+</html>

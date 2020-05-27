@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Home</title>
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="/static/assets/css/style-starter.css">
+
+  <!-- google fonts -->
+  <link href="http://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+</head>
+
+<body class="sidebar-menu-collapsed">
+
+<section>
+  <!-- sidebar menu start -->
+  <div class="sidebar-menu sticky-sidebar-menu">
+
+
+    <div class="sidebar-menu-inner">
+
+      <!-- sidebar nav start -->
+      <ul class="nav nav-pills nav-stacked custom-nav">
+        <li class="active"><a href="index.html">Dashboard</a>
+        </li>
+            <li><a href="{% url 'member' %}">Member List</a> </li>
+            <li><a href="{% url 'tags' %}">Tags</a> </li>
+            <li><a href="{% url 'data_source' %}">Data Source</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- //sidebar menu end -->
+  <!-- header-starts -->
+  <div class="header sticky-header">
+
+    <!-- notification menu start -->
+    <div class="menu-right">
+      <div class="navbar user-panel-top">
+        <div class="search-box">
+          <form action="#search-results.html" method="get">
+            <input class="search-input" placeholder="Search Here..." type="search" id="search">
+            <button class="search-submit" value=""><span class="fa fa-search"></span></button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!--notification menu end -->
+  </div>
+  <!-- //header-ends -->
+  <!-- main content start -->
+<div class="main-content">
+
+  <!-- content -->
+  <div class="container-fluid content-top-gap">
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb my-breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Diagram {{diagram.id}}</li>
+      </ol>
+    </nav>
+      {% if diagram %}
+      <div id="container" style="height: 400%"></div>
+    <ul>
+        <div class="welcome-msg pt-3 pb-4">
+            <div class="chat_list">
+                <div class="chat_people">
+                  <div class="chat_ib">
+                        <h5>ID: {{ diagram.id}}</a></h5>
+                        <p>Type: {{ diagram.Type }}</p>
+                        <p>DataSourceID: {{ diagram.DataSourceID }}</p>
+                        <p>MemberID: {{ diagram.MemberID }}</p>
+                        <p>Title: {{ diagram.Title }}</p>
+                        <p>Description: {{ diagram.Description }}</p>
+                        <p>UploadDate: {{ diagram.UploadDate }}</p>
+                        <p>Visit: {{ Visit.Title }}</p>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </ul>
+      {% else %}
+    <p>No members.</p>
+      {% endif %}
+
+    {% for ds in tag_diagram_list %}
+      {% if diagram.id == ds.DiagramID.id %}
+        {% for ts in tag_list %}
+          {% if ts.id == ds.TagID.id %}
+          <div class="welcome-msg pt-3 pb-4">
+            <div class="chat_list">
+                <div class="chat_people">
+                  <div class="chat_ib">
+                        <h5>Related Tag</a></h5>
+                        <p>ID: {{ ts.id}}</p>
+                        <p>Title: {{ ts.Title }}</p>
+                  </div>
+                 </div>
+            </div>
+          </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+    <input type="button" onclick="show_div()"  value="add tags" />
+    <div id="div_edit_module" style="display: none">
+        {% for ds in tag_list %}
+        <div class="welcome-msg pt-3 pb-4">
+            <div class="chat_list">
+                <div class="chat_people">
+                  <div class="chat_ib">
+                        <h5>ID: {{ ds.id}}</a></h5>
+                        <p>Title: {{ ds.Title }}</p>
+                        <form method="post" action="{% url 'bind' diagram.id %}">
+                            {% csrf_token %}
+                            <input type="radio" name="tagID"  value="{{ ds.id }}" >
+                            <input type="submit" value="bind">
+                        </form>
+                  </div>
+                 </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+  </div>
+  <!-- //content -->
+</div>
+<!-- main content end-->
+</section>
+  <!--footer section start-->
+<footer class="dashboard">
+  <p>Copyright &copy; 2020.Company name All rights reserved.<a target="_blank" href="http://sc.chinaz.com/moban/"></a></p>
+</footer>
+<!--footer section end-->
+<!-- move top -->
+<button onclick="topFunction()" id="movetop" class="bg-primary" title="Go to top">
+  <span class="fa fa-angle-up"></span>
+</button>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+option = {
+    xAxis: {
+        type: 'category',
+        data: [
+            {% for b in year %}
+                "{{ b }}",
+            {% endfor %}
+        ]
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: [
+            {% for b in temp %}
+                "{{ b }}",
+            {% endfor %}
+        ],
+        type: 'line',
+        smooth: true
+    }]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+</script>
+
+<script type="text/javascript">
+        function show_div() {
+            document.getElementById("div_edit_module").style.display = "block";
+        }
+    </script>
+    <style type="text/css">
+
+
+
+
+
+
+
+</body>
+
+</html>
