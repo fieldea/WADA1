@@ -25,7 +25,7 @@ SECRET_KEY = 'e6=7mp8c29s+p*2-ou$v*a+l)pgv+7x#o4^$2!v+i&ierr)5#9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['frozen-tundra-92450.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['frozen-tundra-92450.herokuapp.com', '0.0.0.0', 'localhost', '127.0.0.1', ]
 
 
 # Application definition
@@ -89,8 +89,12 @@ WSGI_APPLICATION = 'WebAppDevAssignment1.wsgi.application'
 # }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd4oacir9oeglof',
+        'USER': 'pbedfwjucophmp',
+        'PASSWORD': 'fef32da9771014639ff9cecff396ad533d61358fbb384ce3ea2bd250b445735f',
+        'HOST': 'ec2-3-91-112-166.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
