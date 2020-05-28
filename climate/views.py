@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
 from .models import Member, DataSource, Format, Folder, Diagram, Tag, TagDiagram, Comment, Summary, SearchResult
-
+from django.utils import timezone
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 
@@ -30,6 +30,15 @@ def test(request, diagram_id):
 
 
 def index(request):
+    memberList = Member.objects.order_by('-Name')
+    membNum = len(memberList)
+    diagramList = Diagram.objects.order_by('-id')
+    diaNum = len(diagramList)
+    tag_list = Tag.objects.order_by('-id')
+    tagNum = len(tag_list)
+    totalVisit = 0
+    for d in diagramList:
+        totalVisit += d.Visit
     hdiagram_list = Diagram.objects.order_by('-Visit')
     ndiagram_list = Diagram.objects.order_by('-id')
     hdiagram_list.reverse()
@@ -62,6 +71,10 @@ def index(request):
         'hyear': hyear,
         'ntemp': ntemp,
         'nyear': nyear,
+        'membNum': membNum,
+        'diaNum': diaNum,
+        'tagNum': tagNum,
+        'totalVisit': totalVisit,
     }
     return HttpResponse(template.render(context, request))
 
@@ -120,11 +133,15 @@ def diagram(request):
 
 
 def diagram_detail(request, diagram_id):
+    comment_list = Comment.objects.order_by('-id')
     tag_list = Tag.objects.order_by('-id')[:5]
     tag_diagram_list = TagDiagram.objects.order_by('-id')[:5]
     format_list = Format.objects.order_by('-id')
     temp = []
     year = []
+    comment1 = []
+    for c in comment_list:
+        comment1.append(c)
     try:
         diagram1 = Diagram.objects.get(id=diagram_id)
         data_source1 = diagram1.DataSourceID
@@ -143,6 +160,7 @@ def diagram_detail(request, diagram_id):
                       'tag_list': tag_list,
                       'temp': temp,
                       'year': year,
+                      'comment1': comment1,
                   })
 
 
@@ -155,13 +173,36 @@ def tag_diagram(request):
     return HttpResponse(template.render(context, request))
 
 
-def comment(request):
-    comment_list = Comment.objects.order_by('-id')[:5]
-    template = loader.get_template('climate/comment.html')
-    context = {
-        'comment_list': comment_list,
-    }
-    return HttpResponse(template.render(context, request))
+def comment(request, diagram_id):
+    comment_list = Comment.objects.order_by('-id')
+    tag_list = Tag.objects.order_by('-id')[:5]
+    tag_diagram_list = TagDiagram.objects.order_by('-id')[:5]
+    commentString = request.POST.get('comment', None)
+    diagram1 = Diagram.objects.get(id=diagram_id)
+    format_list = Format.objects.order_by('-id')
+    temp = []
+    year = []
+    comment1 = []
+    td = Comment(Content=commentString, DiagramID=diagram1, PostDate=timezone.now())
+    td.save();
+    data_source1 = diagram1.DataSourceID
+    for c in comment_list:
+        comment1.append(c)
+    for f in format_list:
+        if (f.id >= data_source1.StartID) and (f.id <= data_source1.EndID):
+            year.append(f.Year)
+            temp.append(f.Temp)
+    year.reverse()
+    temp.reverse()
+    return render(request, 'climate/diagram_detail.html',
+                  {
+                      'diagram': diagram1,
+                      'tag_diagram_list': tag_diagram_list,
+                      'tag_list': tag_list,
+                      'temp': temp,
+                      'year': year,
+                      'comment1': comment1,
+                  })
 
 
 def summary(request):
@@ -174,6 +215,7 @@ def summary(request):
 
 
 def bind(request, diagram_id):
+    comment_list = Comment.objects.order_by('-id')
     tagID = request.POST.get('tagID', None)
     tag = Tag.objects.get(id=tagID)
     diagram1 = Diagram.objects.get(id=diagram_id)
@@ -182,6 +224,9 @@ def bind(request, diagram_id):
     format_list = Format.objects.order_by('-id')
     temp = []
     year = []
+    comment1 = []
+    for c in comment_list:
+        comment1.append(c)
     try:
         t1 = TagDiagram.objects.get(TagID=tag)
     except:
@@ -201,4 +246,5 @@ def bind(request, diagram_id):
                       'tag_list': tag_list,
                       'temp': temp,
                       'year': year,
+                      'comment1': comment1,
                   })

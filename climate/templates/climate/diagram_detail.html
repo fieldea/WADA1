@@ -74,21 +74,21 @@
                   <div class="chat_ib">
                         <h5>ID: {{ diagram.id}}</a></h5>
                         <p>Type: {{ diagram.Type }}</p>
-                        <p>DataSourceID: {{ diagram.DataSourceID }}</p>
-                        <p>MemberID: {{ diagram.MemberID }}</p>
+                        <p>DataSourceID: {{ diagram.DataSourceID.id }}</p>
+                        <p>MemberID: {{ diagram.MemberID.id }}</p>
                         <p>Title: {{ diagram.Title }}</p>
                         <p>Description: {{ diagram.Description }}</p>
                         <p>UploadDate: {{ diagram.UploadDate }}</p>
-                        <p>Visit: {{ Visit.Title }}</p>
+                        <p>Visit: {{ diagram.Visit }}</p>
                   </div>
                 </div>
             </div>
         </div>
     </ul>
       {% else %}
-    <p>No members.</p>
+    <p>No Diagrams.</p>
       {% endif %}
-
+    Related Tag:
     {% for ds in tag_diagram_list %}
       {% if diagram.id == ds.DiagramID.id %}
         {% for ts in tag_list %}
@@ -97,8 +97,7 @@
             <div class="chat_list">
                 <div class="chat_people">
                   <div class="chat_ib">
-                        <h5>Related Tag</a></h5>
-                        <p>ID: {{ ts.id}}</p>
+                        <h5>ID: {{ ts.id}}</a></h5>
                         <p>Title: {{ ts.Title }}</p>
                   </div>
                  </div>
@@ -108,13 +107,13 @@
         {% endfor %}
       {% endif %}
     {% endfor %}
-    <input type="button" onclick="show_div()"  value="add tags" />
-    <div id="div_edit_module" style="display: none">
+      <input type="button" onclick="show_div()"  value="add tags" />
+        <div id="div_edit_module" style="display: none">
         {% for ds in tag_list %}
-        <div class="welcome-msg pt-3 pb-4">
-            <div class="chat_list">
-                <div class="chat_people">
-                  <div class="chat_ib">
+            <div class="welcome-msg pt-3 pb-4">
+                <div class="chat_list">
+                    <div class="chat_people">
+                    <div class="chat_ib">
                         <h5>ID: {{ ds.id}}</a></h5>
                         <p>Title: {{ ds.Title }}</p>
                         <form method="post" action="{% url 'bind' diagram.id %}">
@@ -124,10 +123,30 @@
                         </form>
                   </div>
                  </div>
+                </div>
             </div>
-        </div>
         {% endfor %}
-    </div>
+        </div>
+      <div>Comment here:</div>
+      {% for cs in comment1 %}
+          <div class="welcome-msg pt-3 pb-4">
+            <div class="chat_list">
+                <div class="chat_people">
+                  <div class="chat_ib">
+                        <h5>Content: {{ cs.Content}}</a></h5>
+                        <p>Post date: {{ cs.PostDate }}</p>
+                  </div>
+                 </div>
+            </div>
+          </div>
+    {% endfor %}
+      <form method="post" action="{% url 'comment' diagram.id %}">
+          {% csrf_token %}
+          Make a Comment:
+          <input type="text" name="comment"  >
+          <input type="submit" value="comment">
+      </form>
+
 
   </div>
   <!-- //content -->
@@ -185,7 +204,11 @@ if (option && typeof option === "object") {
 
 <script type="text/javascript">
         function show_div() {
-            document.getElementById("div_edit_module").style.display = "block";
+            d = document.getElementById("div_edit_module").style.display;
+            if (d == "block")
+                document.getElementById("div_edit_module").style.display = "none";
+            else
+                document.getElementById("div_edit_module").style.display = "block";
         }
     </script>
     <style type="text/css">

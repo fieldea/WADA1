@@ -12,8 +12,9 @@ urlpatterns = [
     path('data_source/', views.data_source, name='data_source'),
     path('folder/', views.folder, name='folder'),
     path('tag_diagram/', views.tag_diagram, name='tag_diagram'),
-    path('comment/', views.comment, name='comment'),
+    # path('comment/', views.comment, name='comment'),
     path('summary/', views.summary, name='summary'),
     path('diagram/<int:diagram_id>/bind/', views.bind, name='bind'),
+    path('diagram/<int:diagram_id>/comment/', views.comment, name='comment'),
     path('test/<int:diagram_id>/', views.test, name='test'),
 ]
