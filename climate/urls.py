@@ -17,7 +17,4 @@ urlpatterns = [
     path('diagram/<int:diagram_id>/bind/', views.bind, name='bind'),
     path('diagram/<int:diagram_id>/comment/', views.comment, name='comment'),
     path('test/<int:diagram_id>/', views.test, name='test'),
-    path('login', views.login, name='login'),
-    path('logout', views.logout, name='logout'),
-    path('register', views.regist, name='regist'),
 ]

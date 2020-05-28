@@ -4,8 +4,8 @@ from django.shortcuts import render
 from django.template import loader
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django import forms
-from .models import Member, DataSource, Format, Folder, Diagram, Tag, TagDiagram, Comment, Summary, SearchResult, User
+
+from .models import Member, DataSource, Format, Folder, Diagram, Tag, TagDiagram, Comment, Summary, SearchResult
 from django.utils import timezone
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
@@ -251,44 +251,3 @@ def bind(request, diagram_id):
                       'year': year,
                       'comment1': comment1,
                   })
-
-
-class UserForm(forms.Form):
-    username = forms.CharField(label='username', max_length=50)
-    password = forms.CharField(label='password', widget=forms.PasswordInput())
-    email = forms.EmailField(label='email')
-
-
-def regist(request):
-    if request.method == 'POST':
-        userform = UserForm(request.POST)
-        if userform.is_valid():
-            username = userform.cleaned_data['username']
-            password = userform.cleaned_data['password']
-            email = userform.cleaned_data['email']
-            User.objects.create(username=username, password=password, email=email)
-            User.save()
-
-            return HttpResponse('regist success!!!')
-    else:
-        userform = UserForm()
-    return render(request, 'climate/login.html', {'userform': userform})
-
-
-def login(request):
-    if request.method == 'POST':
-        userform = UserForm(request.POST)
-        if userform.is_valid():
-            username = userform.cleaned_data['username']
-            password = userform.cleaned_data['password']
-
-        user = User.objects.filter(username__exact=username, password__exact=password)
-
-        if user:
-            return render(request, 'climate/index.html', {'userform': userform})
-        else:
-            return HttpResponse('error')
-
-    else:
-        userform = UserForm()
-    return render(request, 'climate/login.html', {'userform': userform})
