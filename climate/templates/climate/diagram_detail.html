@@ -26,11 +26,12 @@
 
       <!-- sidebar nav start -->
       <ul class="nav nav-pills nav-stacked custom-nav">
-        <li class="active"><a href="index.html">Dashboard</a>
+        <li class="active"><a href="{% url 'index' %}">Dashboard</a>
         </li>
             <li><a href="{% url 'member' %}">Member List</a> </li>
             <li><a href="{% url 'tags' %}">Tags</a> </li>
             <li><a href="{% url 'data_source' %}">Data Source</a></li>
+            <li><a href="{% url 'diagram' %}">Diagram</a></li>
       </ul>
     </div>
   </div>

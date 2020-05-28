@@ -31,6 +31,7 @@
             <li><a href="{% url 'member' %}">Member List</a> </li>
             <li><a href="{% url 'tags' %}">Tags</a> </li>
             <li><a href="{% url 'data_source' %}">Data Source</a></li>
+            <li><a href="{% url 'diagram' %}">Diagram</a></li>
       </ul>
     </div>
   </div>
@@ -114,34 +115,32 @@
         <div class="col-lg-6 pr-lg-2 chart-grid">
           <div class="card text-center card_border">
             <div class="card-header chart-grid__header">
-              Latest diagram
+              Hottest diagram
             </div>
             <div class="card-body">
               <!-- bar chart -->
-              <div id="container">
-                <canvas id="barchart"></canvas>
-              </div>
+
+                <div id="container" style="height: 400%" ></div>
               <!-- //bar chart -->
             </div>
             <div class="card-footer text-muted chart-grid__footer">
-              Updated 2 hours ago
+              <a href="{% url 'diagram_detail' hid %}">details</a>
             </div>
           </div>
         </div>
         <div class="col-lg-6 pl-lg-2 chart-grid">
           <div class="card text-center card_border">
             <div class="card-header chart-grid__header">
-              Hottest diagram
+              Latest diagram
             </div>
             <div class="card-body">
               <!-- line chart -->
-              <div id="container">
-                <canvas id="linechart"></canvas>
-              </div>
+
+                <div id="container2" style="height: 400%"></div>
               <!-- //line chart -->
             </div>
             <div class="card-footer text-muted chart-grid__footer">
-              Updated just now
+              <a href="{% url 'diagram_detail' nid %}">details</a>
             </div>
           </div>
         </div>
@@ -163,7 +162,83 @@
   <span class="fa fa-angle-up"></span>
 </button>
 
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+option = {
+    xAxis: {
+        type: 'category',
+        data: [
+            {% for b in hyear %}
+                "{{ b }}",
+            {% endfor %}
+        ]
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: [
+            {% for b in htemp %}
+                "{{ b }}",
+            {% endfor %}
+        ],
+        type: 'line',
+        smooth: true
+    }]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+</script>
+<script type="text/javascript">
+    var dom = document.getElementById("container2");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+option = {
+    xAxis: {
+        type: 'category',
+        data: [
+            {% for b in nyear %}
+                "{{ b }}",
+            {% endfor %}
+        ]
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: [
+            {% for b in ntemp %}
+                "{{ b }}",
+            {% endfor %}
+        ],
+        type: 'line',
+        smooth: true
+    }]
+};
+;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+</script>
+<script type="text/javascript">
+        function show_div() {
+            document.getElementById("div_edit_module").style.display = "block";
+        }
+    </script>
+    <style type="text/css">
 
 
 

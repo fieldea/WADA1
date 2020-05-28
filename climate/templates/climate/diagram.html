@@ -26,11 +26,12 @@
 
       <!-- sidebar nav start -->
       <ul class="nav nav-pills nav-stacked custom-nav">
-        <li class="active"><a href="index.html">Dashboard</a>
+        <li class="active"><a href="{% url 'index' %}">Dashboard</a>
         </li>
             <li><a href="{% url 'member' %}">Member List</a> </li>
             <li><a href="{% url 'tags' %}">Tags</a> </li>
             <li><a href="{% url 'data_source' %}">Data Source</a></li>
+            <li><a href="{% url 'diagram' %}">Diagram</a></li>
       </ul>
     </div>
   </div>
@@ -72,13 +73,9 @@
                 <div class="chat_people">
                   <div class="chat_ib">
                         <h5>ID: {{ ds.id}}</a></h5>
-                        <p>Type: {{ ds.Type }}</p>
-                        <p>DataSourceID: {{ ds.DataSourceID }}</p>
                         <p>MemberID: {{ ds.MemberID }}</p>
                         <p>Title: {{ ds.Title }}</p>
-                        <p>Description: {{ ds.Description }}</p>
-                        <p>UploadDate: {{ ds.UploadDate }}</p>
-                        <p>Visit: {{ Visit.Title }}</p>
+                        <a href="{% url 'diagram_detail' ds.id %}">details</a>
                   </div>
                  </div>
             </div>
@@ -107,22 +104,6 @@
 
 
 
-<script src="assets/js/jquery-3.3.1.min.js"></script>
-<script src="assets/js/jquery-1.10.2.min.js"></script>
-
-<!-- chart js -->
-<script src="assets/js/Chart.min.js"></script>
-<script src="assets/js/utils.js"></script>
-<!-- //chart js -->
-
-<!-- Different scripts of charts.  Ex.Barchart, Linechart -->
-<script src="assets/js/bar.js"></script>
-<script src="assets/js/linechart.js"></script>
-<!-- //Different scripts of charts.  Ex.Barchart, Linechart -->
-
-
-<script src="assets/js/jquery.nicescroll.js"></script>
-<script src="assets/js/scripts.js"></script>
 
 
 

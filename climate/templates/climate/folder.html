@@ -26,11 +26,12 @@
 
       <!-- sidebar nav start -->
       <ul class="nav nav-pills nav-stacked custom-nav">
-        <li class="active"><a href="index.html">Dashboard</a>
+        <li class="active"><a href="{% url 'index' %}">Dashboard</a>
         </li>
             <li><a href="{% url 'member' %}">Member List</a> </li>
             <li><a href="{% url 'tags' %}">Tags</a> </li>
             <li><a href="{% url 'data_source' %}">Data Source</a></li>
+            <li><a href="{% url 'diagram' %}">Diagram</a></li>
       </ul>
     </div>
   </div>
@@ -103,22 +104,7 @@
 
 
 
-<script src="assets/js/jquery-3.3.1.min.js"></script>
-<script src="assets/js/jquery-1.10.2.min.js"></script>
 
-<!-- chart js -->
-<script src="assets/js/Chart.min.js"></script>
-<script src="assets/js/utils.js"></script>
-<!-- //chart js -->
-
-<!-- Different scripts of charts.  Ex.Barchart, Linechart -->
-<script src="assets/js/bar.js"></script>
-<script src="assets/js/linechart.js"></script>
-<!-- //Different scripts of charts.  Ex.Barchart, Linechart -->
-
-
-<script src="assets/js/jquery.nicescroll.js"></script>
-<script src="assets/js/scripts.js"></script>
 
 
 

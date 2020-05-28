@@ -5,7 +5,7 @@ from django.template import loader
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
-from .models import Member, DataSource,Format,Folder,Diagram,Tag,TagDiagram,Comment,Summary,SearchResult
+from .models import Member, DataSource, Format, Folder, Diagram, Tag, TagDiagram, Comment, Summary, SearchResult
 
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
@@ -17,7 +17,7 @@ def test(request, diagram_id):
     format_list = Format.objects.order_by('-id')
     temp = []
     year = []
-    for f in format_list :
+    for f in format_list:
         if (f.id >= data_source1.StartID) and (f.id <= data_source1.EndID):
             year.append(f.Year)
             temp.append(f.Temp)
@@ -30,10 +30,38 @@ def test(request, diagram_id):
 
 
 def index(request):
+    hdiagram_list = Diagram.objects.order_by('-Visit')
+    ndiagram_list = Diagram.objects.order_by('-id')
+    hdiagram_list.reverse()
+    ndiagram_list.reverse()
+    hdata_source = hdiagram_list[0].DataSourceID
+    ndata_source = ndiagram_list[0].DataSourceID
+    format_list = Format.objects.order_by('-id')
+    htemp = []
+    hyear = []
+    ntemp = []
+    nyear = []
+    for f in format_list:
+        if (f.id >= hdata_source.StartID) and (f.id <= hdata_source.EndID):
+            hyear.append(f.Year)
+            htemp.append(f.Temp)
+        if (f.id >= ndata_source.StartID) and (f.id <= ndata_source.EndID):
+            nyear.append(f.Year)
+            ntemp.append(f.Temp)
     member_list = Member.objects.order_by('-Name')[:5]
     template = loader.get_template('climate/index.html')
+    hyear.reverse()
+    htemp.reverse()
+    nyear.reverse()
+    ntemp.reverse()
     context = {
         'member_list': member_list,
+        'hid': hdiagram_list[0].id,
+        'nid': ndiagram_list[0].id,
+        'htemp': htemp,
+        'hyear': hyear,
+        'ntemp': ntemp,
+        'nyear': nyear,
     }
     return HttpResponse(template.render(context, request))
 
@@ -147,13 +175,30 @@ def summary(request):
 
 def bind(request, diagram_id):
     tagID = request.POST.get('tagID', None)
-    tag= Tag.objects.get(id=tagID)
+    tag = Tag.objects.get(id=tagID)
     diagram1 = Diagram.objects.get(id=diagram_id)
     tag_list = Tag.objects.order_by('-id')[:5]
     tag_diagram_list = TagDiagram.objects.order_by('-id')[:5]
-
-    td = TagDiagram(TagID = tag, DiagramID = diagram1)
-    td.save();
+    format_list = Format.objects.order_by('-id')
+    temp = []
+    year = []
+    try:
+        t1 = TagDiagram.objects.get(TagID=tag)
+    except:
+        td = TagDiagram(TagID=tag, DiagramID=diagram1)
+        td.save();
+    data_source1 = diagram1.DataSourceID
+    for f in format_list:
+        if (f.id >= data_source1.StartID) and (f.id <= data_source1.EndID):
+            year.append(f.Year)
+            temp.append(f.Temp)
+    year.reverse()
+    temp.reverse()
     return render(request, 'climate/diagram_detail.html',
-                  {'diagram': diagram1, 'tag_diagram_list': tag_diagram_list, 'tag_list': tag_list})
-
+                  {
+                      'diagram': diagram1,
+                      'tag_diagram_list': tag_diagram_list,
+                      'tag_list': tag_list,
+                      'temp': temp,
+                      'year': year,
+                  })
