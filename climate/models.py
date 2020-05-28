@@ -3,7 +3,6 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
-from django.contrib import admin
 
 class Member(models.Model):
     Name = models.CharField(max_length=200)
@@ -66,14 +65,8 @@ class SearchResult(models.Model):
     DisplayMode = models.IntegerField(default=0)
 
 
-class User(models.Model):
-    username = models.CharField(max_length=50)
-    password = models.CharField(max_length=50)
-    email = models.EmailField()
 
 
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'password', 'email')
 
 
 
