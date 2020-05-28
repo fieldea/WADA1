@@ -67,11 +67,8 @@
     </nav>
       {% if diagram %}
       <div id="container" style="height: 400%"></div>
-    <ul>
-            <div class="col-sm-6 pr-sm-2 statistics-grid">
+        <div class="col-sm-6 pr-sm-2 statistics-grid">
               <div class="card card_border border-primary-top p-4">
-        <div class="welcome-msg pt-3 pb-4">
-            <div class="chat_list">
                 <div class="chat_people">
                   <div class="chat_ib">
                         <h5>ID: {{ diagram.id}}</a></h5>
@@ -86,32 +83,31 @@
                 </div>
             </div>
         </div>
-            </div>
-        </div>
-    </ul>
       {% else %}
     <p>No Diagrams.</p>
       {% endif %}
+
+            <ul>
     Related Tag:
     {% for ds in tag_diagram_list %}
       {% if diagram.id == ds.DiagramID.id %}
         {% for ts in tag_list %}
           {% if ts.id == ds.TagID.id %}
-            <div class="col-sm-6 pr-sm-2 statistics-grid">
-              <div class="card card_border border-primary-top p-4">
-                <div class="chat_people">
-                  <div class="chat_ib">
-                        <h5>ID: {{ ts.id}}</a></h5>
-                        <p>Title: {{ ts.Title }}</p>
-                  </div>
-                 </div>
-            </div>
-          </div>
+                <div class="col-sm-6 pr-sm-2 statistics-grid">
+                    <div class="card card_border border-primary-top p-4">
+                        <div class="chat_people">
+                            <div class="chat_ib">
+                                <h5>ID: {{ ts.id}}</a></h5>
+                                <p>Title: {{ ts.Title }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
           {% endif %}
         {% endfor %}
       {% endif %}
     {% endfor %}
-      <input type="button" onclick="show_div()"  value="add tags" />
+      <input type="button" onclick="show_div()"  value="add tags" style="margin-left: 20px; margin-bottom: 20px"/>
         <div id="div_edit_module" style="display: none">
         {% for ds in tag_list %}
             <div class="col-sm-6 pr-sm-2 statistics-grid">
@@ -150,6 +146,7 @@
           <input type="text" name="comment"  >
           <input type="submit" value="comment">
       </form>
+            </ul>
 
 
   </div>
