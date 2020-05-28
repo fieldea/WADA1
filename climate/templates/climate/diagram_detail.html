@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Home</title>
+  <title>Diagram Detail</title>
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="/static/assets/css/style-starter.css">
@@ -68,6 +68,8 @@
       {% if diagram %}
       <div id="container" style="height: 400%"></div>
     <ul>
+            <div class="col-sm-6 pr-sm-2 statistics-grid">
+              <div class="card card_border border-primary-top p-4">
         <div class="welcome-msg pt-3 pb-4">
             <div class="chat_list">
                 <div class="chat_people">
@@ -84,6 +86,8 @@
                 </div>
             </div>
         </div>
+            </div>
+        </div>
     </ul>
       {% else %}
     <p>No Diagrams.</p>
@@ -93,8 +97,8 @@
       {% if diagram.id == ds.DiagramID.id %}
         {% for ts in tag_list %}
           {% if ts.id == ds.TagID.id %}
-          <div class="welcome-msg pt-3 pb-4">
-            <div class="chat_list">
+            <div class="col-sm-6 pr-sm-2 statistics-grid">
+              <div class="card card_border border-primary-top p-4">
                 <div class="chat_people">
                   <div class="chat_ib">
                         <h5>ID: {{ ts.id}}</a></h5>
@@ -110,8 +114,8 @@
       <input type="button" onclick="show_div()"  value="add tags" />
         <div id="div_edit_module" style="display: none">
         {% for ds in tag_list %}
-            <div class="welcome-msg pt-3 pb-4">
-                <div class="chat_list">
+            <div class="col-sm-6 pr-sm-2 statistics-grid">
+              <div class="card card_border border-primary-top p-4">
                     <div class="chat_people">
                     <div class="chat_ib">
                         <h5>ID: {{ ds.id}}</a></h5>
@@ -129,8 +133,8 @@
         </div>
       <div>Comment here:</div>
       {% for cs in comment1 %}
-          <div class="welcome-msg pt-3 pb-4">
-            <div class="chat_list">
+            <div class="col-sm-6 pr-sm-2 statistics-grid">
+              <div class="card card_border border-primary-top p-4">
                 <div class="chat_people">
                   <div class="chat_ib">
                         <h5>Content: {{ cs.Content}}</a></h5>

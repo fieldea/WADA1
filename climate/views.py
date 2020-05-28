@@ -229,6 +229,9 @@ def bind(request, diagram_id):
         comment1.append(c)
     try:
         t1 = TagDiagram.objects.get(TagID=tag)
+        if t1.DiagramID.id != diagram_id:
+            td = TagDiagram(TagID=tag, DiagramID=diagram1)
+            td.save();
     except:
         td = TagDiagram(TagID=tag, DiagramID=diagram1)
         td.save();

@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Home</title>
+  <title>Tag_Diagram</title>
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="/static/assets/css/style-starter.css">
@@ -68,8 +68,8 @@
       {% if tag_diagram_list %}
     <ul>
         {% for ds in tag_diagram_list %}
-        <div class="welcome-msg pt-3 pb-4">
-            <div class="chat_list">
+            <div class="col-sm-6 pr-sm-2 statistics-grid">
+              <div class="card card_border border-primary-top p-4">
                 <div class="chat_people">
                   <div class="chat_ib">
                         <h5>ID: {{ ds.id}}</a></h5>

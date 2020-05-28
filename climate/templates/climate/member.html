@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>Home</title>
+  <title>Member</title>
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="/static/assets/css/style-starter.css">
@@ -68,6 +68,8 @@
       {% if member_list %}
     <ul>
         {% for member in member_list %}
+            <div class="col-sm-6 pr-sm-2 statistics-grid">
+              <div class="card card_border border-primary-top p-4">
         <div class="welcome-msg pt-3 pb-4">
             <div class="chat_list">
                 <div class="chat_people">
@@ -77,6 +79,8 @@
                         <p>Email: {{ member.Email }}</p>
                   </div>
                  </div>
+            </div>
+        </div>
             </div>
         </div>
         {% endfor %}
