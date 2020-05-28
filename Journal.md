@@ -30,6 +30,12 @@ create editable link
 estimate:2hr
 stopped @ 8:00 pm
 ===
-May 267h 2020 -start @10：00 AM
+May 27h 2020 -start @10：00 AM
 use Echarts to create visulize diagram
 estimate:5hr
+stopped @ 5:00pm
+===
+May 28h 2020 -start @3：00 PM
+adjusting heroku config
+estimate:3hr
+stopped @ 7:00pm
