@@ -39,7 +39,7 @@
   <!-- header-starts -->
   <div class="header sticky-header">
 
-    <!-- notification menu start -->
+        <!-- notification menu start -->
     <div class="menu-right">
       <div class="navbar user-panel-top">
         <div class="search-box">
@@ -47,6 +47,10 @@
             <input class="search-input" placeholder="Search Here..." type="search" id="search">
             <button class="search-submit" value=""><span class="fa fa-search"></span></button>
           </form>
+        </div>
+        <div class="user-dropdown-details d-flex">
+          <h5 class="user-name"></h5>
+          <li class="logout">{{username}}<a href="{% url 'logout' %}"><i class="fa fa-power-off"></i> Logout</a> </li>
         </div>
       </div>
     </div>

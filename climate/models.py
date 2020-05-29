@@ -2,11 +2,12 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
-class Member(models.Model):
-    Name = models.CharField(max_length=200)
-    Email = models.CharField(max_length=255)
+# class Member(models.Model):
+#     Name = models.CharField(max_length=200)
+#     Email = models.CharField(max_length=255)
 
 
 class DataSource(models.Model):
@@ -30,7 +31,7 @@ class Diagram(models.Model):
     # ID = models.IntegerField(default=0)
     Type = models.IntegerField(default=0)
     DataSourceID = models.ForeignKey(DataSource, on_delete=models.CASCADE)
-    MemberID = models.ForeignKey(Member, on_delete=models.CASCADE)
+    MemberID = models.ForeignKey(User, on_delete=models.CASCADE)
     Title = models.CharField(max_length=255)
     Description = models.CharField(max_length=255)
     UploadDate = models.DateTimeField()
@@ -55,7 +56,7 @@ class Comment(models.Model):
 
 
 class Summary(models.Model):
-    MemberID = models.ForeignKey(Member, on_delete=models.CASCADE)
+    MemberID = models.ForeignKey(User, on_delete=models.CASCADE)
     Visit = models.IntegerField(default=0)
 
 

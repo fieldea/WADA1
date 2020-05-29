@@ -4,14 +4,21 @@ from django.shortcuts import render
 from django.template import loader
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-
-from .models import Member, DataSource, Format, Folder, Diagram, Tag, TagDiagram, Comment, Summary, SearchResult
+from django.contrib.auth.models import Permission, User
+from django.contrib.auth import authenticate
+from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login
+from . import forms
+from .forms import RegisterForm
+from .models import  DataSource, Format, Folder, Diagram, Tag, TagDiagram, Comment, Summary, SearchResult
 from django.utils import timezone
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 
 
 def test(request, diagram_id):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
     diagram1 = Diagram.objects.get(id=diagram_id)
     data_source1 = diagram1.DataSourceID
     format_list = Format.objects.order_by('-id')
@@ -30,7 +37,9 @@ def test(request, diagram_id):
 
 
 def index(request):
-    memberList = Member.objects.order_by('-Name')
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
+    memberList = User.objects.order_by('-id')
     membNum = len(memberList)
     diagramList = Diagram.objects.order_by('-id')
     diaNum = len(diagramList)
@@ -57,7 +66,7 @@ def index(request):
         if (f.id >= ndata_source.StartID) and (f.id <= ndata_source.EndID):
             nyear.append(f.Year)
             ntemp.append(f.Temp)
-    member_list = Member.objects.order_by('-Name')[:5]
+    member_list = User.objects.order_by('-id')[:5]
     template = loader.get_template('climate/index.html')
     hyear.reverse()
     htemp.reverse()
@@ -75,12 +84,15 @@ def index(request):
         'diaNum': diaNum,
         'tagNum': tagNum,
         'totalVisit': totalVisit,
+        'username': request.user.username,
     }
     return HttpResponse(template.render(context, request))
 
 
 def member(request):
-    memberList = Member.objects.order_by('-Name')[:5]
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
+    memberList = User.objects.order_by('-id')[:5]
     template = loader.get_template('climate/member.html')
     context = {
         'member_list': memberList,
@@ -89,14 +101,18 @@ def member(request):
 
 
 def member_detail(request, member_id):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
     try:
-        member1 = Member.objects.get(id=member_id)
-    except Member.DoesNotExist:
+        member1 = User.objects.get(id=member_id)
+    except User.DoesNotExist:
         raise Http404("Member does not exist")
     return render(request, 'climate/member_detail.html', {'member': member1})
 
 
 def tags(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
     tag_list = Tag.objects.order_by('-id')[:5]
     template = loader.get_template('climate/tags.html')
     context = {
@@ -106,6 +122,8 @@ def tags(request):
 
 
 def data_source(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
     dataSource = DataSource.objects.order_by('-id')[:5]
     template = loader.get_template('climate/data_source.html')
     context = {
@@ -115,6 +133,8 @@ def data_source(request):
 
 
 def folder(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
     folder_list = Folder.objects.order_by('-id')[:5]
     template = loader.get_template('climate/folder.html')
     context = {
@@ -124,6 +144,8 @@ def folder(request):
 
 
 def diagram(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
     diagram_list = Diagram.objects.order_by('-id')[:5]
     template = loader.get_template('climate/diagram.html')
     context = {
@@ -133,6 +155,8 @@ def diagram(request):
 
 
 def diagram_detail(request, diagram_id):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
     comment_list = Comment.objects.order_by('-id')
     tag_list = Tag.objects.order_by('-id')[:5]
     tag_diagram_list = TagDiagram.objects.order_by('-id')[:5]
@@ -151,7 +175,7 @@ def diagram_detail(request, diagram_id):
                 temp.append(f.Temp)
         year.reverse()
         temp.reverse()
-    except Member.DoesNotExist:
+    except Diagram.DoesNotExist:
         raise Http404("Diagram does not exist")
     return render(request, 'climate/diagram_detail.html',
                   {
@@ -165,6 +189,8 @@ def diagram_detail(request, diagram_id):
 
 
 def tag_diagram(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
     tag_diagram_list = TagDiagram.objects.order_by('-id')[:5]
     template = loader.get_template('climate/tag_diagram.html')
     context = {
@@ -174,38 +200,18 @@ def tag_diagram(request):
 
 
 def comment(request, diagram_id):
-    comment_list = Comment.objects.order_by('-id')
-    tag_list = Tag.objects.order_by('-id')[:5]
-    tag_diagram_list = TagDiagram.objects.order_by('-id')[:5]
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
     commentString = request.POST.get('comment', None)
     diagram1 = Diagram.objects.get(id=diagram_id)
-    format_list = Format.objects.order_by('-id')
-    temp = []
-    year = []
-    comment1 = []
     td = Comment(Content=commentString, DiagramID=diagram1, PostDate=timezone.now())
     td.save();
-    data_source1 = diagram1.DataSourceID
-    for c in comment_list:
-        comment1.append(c)
-    for f in format_list:
-        if (f.id >= data_source1.StartID) and (f.id <= data_source1.EndID):
-            year.append(f.Year)
-            temp.append(f.Temp)
-    year.reverse()
-    temp.reverse()
-    return render(request, 'climate/diagram_detail.html',
-                  {
-                      'diagram': diagram1,
-                      'tag_diagram_list': tag_diagram_list,
-                      'tag_list': tag_list,
-                      'temp': temp,
-                      'year': year,
-                      'comment1': comment1,
-                  })
+    return redirect(reverse('diagram_detail', args=[diagram_id]))
 
 
 def summary(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
     summary_list = Summary.objects.order_by('-id')[:5]
     template = loader.get_template('climate/summary.html')
     context = {
@@ -215,18 +221,11 @@ def summary(request):
 
 
 def bind(request, diagram_id):
-    comment_list = Comment.objects.order_by('-id')
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'))
     tagID = request.POST.get('tagID', None)
     tag = Tag.objects.get(id=tagID)
     diagram1 = Diagram.objects.get(id=diagram_id)
-    tag_list = Tag.objects.order_by('-id')[:5]
-    tag_diagram_list = TagDiagram.objects.order_by('-id')[:5]
-    format_list = Format.objects.order_by('-id')
-    temp = []
-    year = []
-    comment1 = []
-    for c in comment_list:
-        comment1.append(c)
     try:
         t1 = TagDiagram.objects.get(TagID=tag)
         if t1.DiagramID.id != diagram_id:
@@ -235,19 +234,58 @@ def bind(request, diagram_id):
     except:
         td = TagDiagram(TagID=tag, DiagramID=diagram1)
         td.save();
-    data_source1 = diagram1.DataSourceID
-    for f in format_list:
-        if (f.id >= data_source1.StartID) and (f.id <= data_source1.EndID):
-            year.append(f.Year)
-            temp.append(f.Temp)
-    year.reverse()
-    temp.reverse()
-    return render(request, 'climate/diagram_detail.html',
-                  {
-                      'diagram': diagram1,
-                      'tag_diagram_list': tag_diagram_list,
-                      'tag_list': tag_list,
-                      'temp': temp,
-                      'year': year,
-                      'comment1': comment1,
-                  })
+    return redirect(reverse('diagram_detail', args=[diagram_id]))
+
+
+def login_view(request):
+    if request.method == "POST":
+        login_form = forms.UserForm(request.POST)
+        message = "error！"
+        if login_form.is_valid():
+            username = login_form.cleaned_data['username']
+            password = login_form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                # message = username + password
+                login(request, user)
+                return redirect(reverse('index', args=[]))
+            else:
+                return render(request, 'climate/login.html', locals())
+    login_form = forms.UserForm()
+    return render(request, 'climate/login.html', locals())
+
+
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('login'))
+
+
+def register(request):
+    if request.session.get('is_login', None):
+        return redirect(reverse('index', args=[]))
+    if request.method == "POST":
+        register_form = RegisterForm(request.POST)
+        message = "error！"
+        if register_form.is_valid():
+            username = register_form.cleaned_data['username']
+            password1 = register_form.cleaned_data['password']
+            password2 = register_form.cleaned_data['confirm']
+            email = register_form.cleaned_data['email']
+            if password1 != password2:
+                message = "confirm password please！"
+                return render(request, 'climate/register.html', locals())
+            else:
+                same_name_user = User.objects.filter(username=username)
+                if same_name_user:
+                    message = 'username exist!'
+                    return render(request, 'climate/register.html', locals())
+                same_email_user = User.objects.filter(email=email)
+                if same_email_user:
+                    message = 'email in use！'
+                    return render(request, 'climate/register.html', locals())
+
+                new_user = User.objects.create_user(username, email, password1)
+                new_user.save()
+                return redirect(reverse('login'))
+    register_form = RegisterForm()
+    return render(request, 'climate/register.html', locals())
