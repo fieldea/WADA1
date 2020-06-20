@@ -1,0 +1,9 @@
+FROM python:3.8
+MAINTAINER Fieldea
+ADD . /usr/src/app
+WORKDIR /usr/src/app
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+RUN rm -rf /usr/src/app
+COPY . /usr/src/app
+CMD [ "python", "./manage.py", "runserver", "0.0.0.0:8080"]

@@ -14,6 +14,17 @@ from .models import  DataSource, Format, Folder, Diagram, Tag, TagDiagram, Comme
 from django.utils import timezone
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
+from django.contrib.auth.models import User
+from rest_framework import permissions, renderers, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
+from .serializers import FormatSerializer
+
+
+class FormatViewSet(viewsets.ModelViewSet):
+    queryset = Format.objects.all().order_by('-id')
+    serializer_class = FormatSerializer
 
 
 def test(request, diagram_id):
