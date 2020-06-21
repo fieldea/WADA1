@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['murmuring-river-55057.herokuapp.com','frozen-tundra-92450.herokuapp.com', '0.0.0.0', 'localhost', '127.0.0.1', 'web-dev-66b324da0ad7bbcb.elb.ap-southeast-2.amazonaws.com','ec2-52-64-22-223.ap-southeast-2.compute.amazonaws.com','ec2-54-252-228-65.ap-southeast-2.compute.amazonaws.com','ec2co-ecsel-1n98okb90swfh-1618155637.ap-southeast-2.elb.amazonaws.com']
 
 # ALLOWED_HOSTS = ['*']
-
+ 
 # Application definition
 
 INSTALLED_APPS = [
