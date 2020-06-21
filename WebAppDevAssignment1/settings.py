@@ -22,7 +22,7 @@ SECRET_KEY = 'e6=7mp8c29s+p*2-ou$v*a+l)pgv+7x#o4^$2!v+i&ierr)5#9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['frozen-tundra-92450.herokuapp.com', '0.0.0.0', 'localhost', '127.0.0.1', ]
+ALLOWED_HOSTS = ['frozen-tundra-92450.herokuapp.com', '0.0.0.0', 'localhost', '127.0.0.1','murmuring-river-55057.herokuapp.com' ]
 
 
 # Application definition
