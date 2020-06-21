@@ -11,6 +11,8 @@ urlpatterns = [
     path('member/', views.member, name='member'),
     path('diagram/<int:diagram_id>/', views.diagram_detail, name='diagram_detail'),
     path('diagram/', views.diagram, name='diagram'),
+
+    path('react/', views.react, name='react'),
     path('tags/', views.tags, name='tags'),
     path('data_source/', views.data_source, name='data_source'),
     path('folder/', views.folder, name='folder'),

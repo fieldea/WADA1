@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+print('top')
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'WebAppDevAssignment1.middlewares.MyTest'
 ]
 
 ROOT_URLCONF = 'WebAppDevAssignment1.urls'
@@ -76,6 +77,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'WebAppDevAssignment1.wsgi.application'
 
 
+print('middle')
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -150,3 +152,4 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+print('bottom')

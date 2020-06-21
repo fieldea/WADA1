@@ -20,6 +20,14 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from .serializers import FormatSerializer
+from datetime import datetime  # at top of file
+
+
+def react(request):
+    context = {
+    }
+    template = loader.get_template('climate/index2.html')
+    return HttpResponse(template.render(context, request))
 
 
 class FormatViewSet(viewsets.ModelViewSet):
@@ -48,6 +56,7 @@ def test(request, diagram_id):
 
 
 def index(request):
+    print('INDEX')
     if not request.user.is_authenticated:
         return redirect(reverse('login'))
     memberList = User.objects.order_by('-id')
@@ -249,6 +258,7 @@ def bind(request, diagram_id):
 
 
 def login_view(request):
+    print('INDEX')
     if request.method == "POST":
         login_form = forms.UserForm(request.POST)
         message = "error！"
