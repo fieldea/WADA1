@@ -35,7 +35,7 @@ def test(request, diagram_id):
     }
     return HttpResponse(template.render(context, request))
 
-
+ 
 def index(request):
     if not request.user.is_authenticated:
         return redirect(reverse('login'))
