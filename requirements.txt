@@ -40,3 +40,4 @@ wcwidth==0.1.9
 whitenoise==5.0.1
 wrapt==1.11.2
 yapf==0.29.0
+
