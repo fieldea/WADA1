@@ -25,9 +25,9 @@ SECRET_KEY = 'e6=7mp8c29s+p*2-ou$v*a+l)pgv+7x#o4^$2!v+i&ierr)5#9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['frozen-tundra-92450.herokuapp.com', '0.0.0.0', 'localhost', '127.0.0.1', 'web-dev-66b324da0ad7bbcb.elb.ap-southeast-2.amazonaws.com','ec2-52-64-22-223.ap-southeast-2.compute.amazonaws.com','ec2-54-252-228-65.ap-southeast-2.compute.amazonaws.com','ec2co-ecsel-1n98okb90swfh-1618155637.ap-southeast-2.elb.amazonaws.com']
+# ALLOWED_HOSTS = ['frozen-tundra-92450.herokuapp.com', '0.0.0.0', 'localhost', '127.0.0.1', 'web-dev-66b324da0ad7bbcb.elb.ap-southeast-2.amazonaws.com','ec2-52-64-22-223.ap-southeast-2.compute.amazonaws.com','ec2-54-252-228-65.ap-southeast-2.compute.amazonaws.com','ec2co-ecsel-1n98okb90swfh-1618155637.ap-southeast-2.elb.amazonaws.com']
 
-# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
