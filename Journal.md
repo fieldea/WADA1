@@ -39,8 +39,3 @@ May 28h 2020 -start @3：00 PM
 adjusting heroku config
 estimate:3hr
 stopped @ 7:00pm
-===
-May 29h 2020 -start @3：00 PM
-add user login&register system 
-estimate:3hr
-stopped @ 7:00pm
