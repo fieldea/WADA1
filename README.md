@@ -1,5 +1,13 @@
+# WebAppDevAssignment2
+React page:http://3.25.60.214:8080/react/
+Django rest api:http://3.25.60.214:8080/formats/
+AWS ECS page:http://3.25.60.214:8080/
+
+![example](https://github.com/fieldea/WADA1/blob/master/bar.png)
+![example](https://github.com/fieldea/WADA1/blob/master/line.png)
+
 # WebAppDevAssignment1
-https://frozen-tundra-92450.herokuapp.com/
+Heroku page:https://frozen-tundra-92450.herokuapp.com/
 ![erd](https://github.com/fieldea/WADA1/blob/master/vpd.png)
 Climate Data Visualize.
 Show climate data with diagrams or charts of New Zealand Climate Data.
