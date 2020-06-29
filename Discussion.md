@@ -6,7 +6,7 @@ Steps for Assignment 2:
 
 3:create react project, used the django rest api for communication with django backend
 
-4:build react project, combine the output to django project template
+4:build react project, upload the output to aws s3
 
 5:create docker image by docker desktop for the whole project, test the image in local virtual machine
 
@@ -25,9 +25,9 @@ Difference from assignment 1 to 2:
 
 2.deploy way, 1 use command to set up a new environment in heroku, while 2 using docker image, which contains the setting of virtual enronment, dependencies, add-on, etc.
 
-3.data communication, 1 use django model to operate database directly, 2 use http api as commands.
+3.data communication, 1 use django model to operate database directly, 2 use http api as commands. With serialization, data can be commonly transfer from different framework.
 
-
+4.paas like heroku, data base and web service are combined, iaas like amazon, hardware are alternative.
 
 Reflection:
 
