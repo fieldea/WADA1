@@ -1,5 +1,5 @@
 # WebAppDevAssignment2
-React page:http://3.25.60.214:8080/react/
+React page in aws s3:http://a2-react.s3-website-ap-southeast-2.amazonaws.com/
 Django rest api:http://3.25.60.214:8080/formats/
 AWS ECS page:http://3.25.60.214:8080/
 
