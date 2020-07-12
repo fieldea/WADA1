@@ -24,3 +24,7 @@ Show climate data with diagrams or charts of New Zealand Climate Data.
 User can search data and select their prefered data to generate diagrams.
 
 Each user can creat and manage(save/delete/edit/share) their pics/views.
+
+#Render
+According to users' visiting url, django finds the binding views in urls.py with some parameters to apply templates.
+Then the views files decide the how and which data to be rendered in the templates by using http response method. Templates will be searched in each folder named 'template' from each app folder. if not found, it will applied 404 page setting, if found, it will applied the templates of html files with data to be rendered
