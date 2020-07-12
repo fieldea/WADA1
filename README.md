@@ -26,5 +26,6 @@ User can search data and select their prefered data to generate diagrams.
 Each user can creat and manage(save/delete/edit/share) their pics/views.
 
 #Server side Rendering
-According to users' visiting url path, django finds the binding views matchingthe router rules in urls.py with some parameters to apply templates.
+
+According to users' visiting url path, django finds the binding views matching the router rules in urls.py with some parameters to apply templates.
 Then the views file use the parameters recieved from url to decide the how and which data to be rendered in the templates by using http response method or switch to other page. Templates will be searched in each folder named 'template' from each app folder. if not found, it will applied 404 page setting, if found, it will applied the templates of html files with data to be rendered
